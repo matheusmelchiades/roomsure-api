@@ -1,4 +1,9 @@
-import { IsNumberString, IsOptional, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsNumberString,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class RoomsFiltersDTO {
   @IsString()
@@ -7,7 +12,7 @@ export class RoomsFiltersDTO {
 
   @IsNumberString()
   @IsOptional()
-  guests?: string = '';
+  guests?: string;
 
   @IsNumberString()
   @IsOptional()
@@ -16,4 +21,12 @@ export class RoomsFiltersDTO {
   @IsNumberString()
   @IsOptional()
   limit: number;
+
+  @IsDateString()
+  @IsOptional()
+  startDate: string;
+
+  @IsDateString()
+  @IsOptional()
+  endDate: string;
 }

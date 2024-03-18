@@ -7,6 +7,7 @@ import {
   IsUUID,
   IsEmail,
   IsEnum,
+  IsDateString,
 } from 'class-validator';
 import { GATEWAY_PAYMENT_STATUS } from '../entities/payment.status';
 
@@ -14,6 +15,14 @@ class CreatePaymentPurchaseItemDTO {
   @IsString()
   @IsUUID()
   roomId: string;
+
+  @IsDateString()
+  @IsNotEmpty()
+  startDate: string;
+
+  @IsDateString()
+  @IsNotEmpty()
+  endDate: string;
 }
 
 class CreatePaymentPuchaseDTO {

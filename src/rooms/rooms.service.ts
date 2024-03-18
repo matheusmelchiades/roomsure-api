@@ -12,19 +12,49 @@ export class RoomsService {
   ) {}
 
   findAll(filters: Partial<RoomsFiltersDTO> = {}): Promise<Room[]> {
-    const { q, guests } = filters;
+    const { q, guests, startDate, endDate } = filters;
     let { page = 1, limit = 5 } = filters;
 
-    let query = this.roomRepository.createQueryBuilder('r');
+    let query = this.roomRepository.createQueryBuilder('rooms');
 
-    if (q) {
-      query = query.andWhere('r.title ILIKE :q OR r.description ILIKE :q', {
-        q: `%${q}%`,
-      });
+    if (startDate && endDate) {
+      // Add the condition to check if the booking dates do not overlap
+      query = query.andWhere(
+        'rooms.id NOT IN (SELECT room_id FROM bookings WHERE (start_date <= :startDate AND end_date >= :endDate))',
+        {
+          startDate,
+          endDate,
+        },
+      );
+    } else if (startDate) {
+      query = query.andWhere(
+        'rooms.id NOT IN (SELECT room_id FROM bookings WHERE (start_date <= :startDate))',
+        {
+          startDate,
+          endDate,
+        },
+      );
+    } else if (endDate) {
+      query = query.andWhere(
+        'rooms.id NOT IN (SELECT room_id FROM bookings WHERE (end_date >= :endDate))',
+        {
+          startDate,
+          endDate,
+        },
+      );
     }
 
     if (guests) {
-      query = query.andWhere('r.capacity = :guests', { guests });
+      query = query.andWhere('rooms.capacity = :guests', { guests });
+    }
+
+    if (q) {
+      query = query.andWhere(
+        'rooms.title ILIKE :q OR rooms.description ILIKE :q',
+        {
+          q: `%${q}%`,
+        },
+      );
     }
 
     if (page < 1) {

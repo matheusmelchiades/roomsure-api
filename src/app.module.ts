@@ -19,6 +19,7 @@ import { PaymentModule } from './payment/payment.module';
         type: configService.get('database.type'),
         url: configService.get('database.url'),
         synchronize: false,
+        logging: false,
       }),
       inject: [ConfigService],
     }),
