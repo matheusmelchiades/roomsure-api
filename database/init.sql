@@ -17,3 +17,11 @@ CREATE TABLE payments (
   message TEXT,
   external_id UUID NOT NULL
 );
+
+CREATE TABLE bookings (
+    id UUID PRIMARY KEY,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL,
+    room_id UUID NOT NULL,
+    payment_id UUID NOT NULL
+);
