@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: roomsure
+      POSTGRES_USER: development
+      POSTGRES_PASSWORD: qwer1234!
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+
+  paymentgateway:
+    build:
+      context: ./_services/payment-gateway
+      dockerfile: Dockerfile
+    environment:
+      WEBHOOK_URL: http://api:3000
+    ports:
+      - '3001:3001'
+    links:
+      - 'api'
+
+  api:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: postgres://development:qwer1234!@database:5432/roomsure
+    ports:
+      - '3000:3000'
+    depends_on:
+      - database
