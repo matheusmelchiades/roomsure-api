@@ -1,73 +1,97 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Roomsure Booking Platform API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Welcome to the Roomsure Booking Platform API documentation. Roomsure is a booking platform that allows users to rent rooms and manage bookings seamlessly. This API provides endpoints for managing rooms, bookings, and payments.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+![Flow Diagram](./_docs/flow.png)
 
-## Description
+## Requirements
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Before proceeding, make sure you have the following installed on your machine:
+
+- Node.js
+- npm (or Yarn)
+
 
 ## Installation
 
-```bash
-$ npm install
-```
-
-## Running the app
+1. Install project dependencies.
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
+# or
+yarn install
 ```
 
-## Test
+## Execution
+
+To start the API, run the following command:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
+# or
+yarn start:dev
 ```
 
-## Support
+This will start the development server. The API will be accessible at `http://localhost:3000` by default.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+or use docker
 
-## Stay in touch
+```bash
+docker-compose up -d
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+this will start the application using the configuration specified in the `docker-compose.yml` file. The `-d` flag runs the containers in detached mode.
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+## Environment Variables
+
+Before running the application, you need to configure the following environment variables:
+
+| Variable       | Description                            |
+| -------------- | -------------------------------------- |
+| PORT           | Port on which the server will listen.  |
+| DATABASE_URL   | URL of the database connection.        |
+| DATABASE_TYPE  | Type of database used (e.g., PostgreSQL, MySQL). |
+
+Ensure these environment variables are correctly configured in the `.env` file before starting the application.
+
+
+
+## Modules
+
+The Roomsure API is divided into three main modules:
+
+1. **Rooms:** This module handles the management of rooms available for rent. Users can view room details, check availability, and make bookings.
+
+2. **Bookings:** The bookings module facilitates the creation, retrieval, and management of bookings. Users can view their bookings, modify reservation details, and cancel bookings if necessary.
+
+3. **Payment:** The payment module integrates with a payment gateway to process transactions securely. It handles payment authorization, capturing funds, and refunds.
+
+## Database Setup
+
+To set up the Roomsure application database, navigate to the `database` directory. Inside, you'll find SQL scripts necessary to initialize the application database schema. The application uses PostgreSQL as its database system.
+
+## Payment Gateway Service
+
+Roomsure integrates with a payment gateway service to handle payment transactions securely. Inside the `_services/payment-gateway` directory, you'll find a simulated payment gateway service. This service is used for testing and demonstration purposes, allowing you to simulate payment transactions within the application.
+
+## API Endpoints
+
+### Rooms
+
+- **GET /rooms**: Retrieve a list of available rooms.
+- **GET /rooms/{roomId}**: Retrieve details of a specific room by ID.
+
+### Bookings
+
+- **GET /bookings**: Retrieve a list of all bookings.
+
+### Payment
+
+- **POST /payment/webhook**: Receive notifications of payment events and authorize a payment for a booking..
+
+## Contact
+
+If you have any questions or need further assistance, please contact the Roomsure support team at matheusmmelchiades@gmail.com.
+
+Thank you for choosing Roomsure! We hope you enjoy using our booking platform.
